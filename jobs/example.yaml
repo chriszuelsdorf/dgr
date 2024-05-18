@@ -1,0 +1,14 @@
+dags:
+  example1:
+    sch: 0 0 * * *
+    tasks:
+      task0:
+        plugin: null
+      task1:
+        plugin: null
+        dep:
+        - task0
+      task2:
+        plugin: null
+        dep:
+        - task1
