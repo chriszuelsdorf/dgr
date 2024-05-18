@@ -21,7 +21,7 @@ class Validator:
         result, msg = Validator._validate(y)
         if result is False and raise_on_err:
             raise InvalidConfigError(msg)
-        return result
+        return result, msg
     
     @staticmethod
     def _validate(y: dict, config:Config|None=None) -> list[bool, str|None]:
