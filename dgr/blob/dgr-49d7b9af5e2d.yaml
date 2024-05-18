@@ -1,0 +1,11 @@
+dirs:
+  # This is the directory where data is stored
+  base: /usr/local/share/dgr-49d7b9af5e2d
+validation:
+  # Whether to use plugins' built in validation of arguments
+  check_plugins:
+    tasks: true
+plugins:
+  # Each plugin with default arguments is listed, if no default args use {}
+  tasks:
+    k8s_pod: {}
