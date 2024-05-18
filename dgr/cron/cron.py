@@ -58,8 +58,8 @@ class Cron:
         self.dow = parseelem(el[4], range(0, 7), "Bad day-of-week portion")
         self.dowstar = el[4] == '*'
 
-    def prev(self):
-        now = datetime.datetime.now(datetime.timezone.utc)
+    def prev(self, ts:datetime.datetime|None=None):
+        now = ts or datetime.datetime.now(datetime.timezone.utc)
         while True:
             while not in_any(now.month, self.mon):
                 now = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -106,8 +106,8 @@ class Cron:
 
             return now
             
-    def next(self):
-        now = datetime.datetime.now(datetime.timezone.utc)
+    def next(self, ts:datetime.datetime|None=None):
+        now = ts or datetime.datetime.now(datetime.timezone.utc)
         while True:
             while not in_any(now.month, self.mon):
                 now = now.replace(
