@@ -12,12 +12,12 @@ class Validator:
         pass
 
     @staticmethod
-    def validate_file(path, raise_on_err=False) -> list[bool, str|None]:
+    def validate_file(path, raise_on_err=False, config:Config|None=None) -> list[bool, str|None]:
         contents = load_yaml(path)
         return Validator.validate(contents, raise_on_err)
     
     @staticmethod
-    def validate(y: dict, raise_on_err=False) -> list[bool, str|None]:
+    def validate(y: dict, raise_on_err=False, config:Config|None=None) -> list[bool, str|None]:
         result, msg = Validator._validate(y)
         if result is False and raise_on_err:
             raise InvalidConfigError(msg)
