@@ -49,9 +49,9 @@ class Dag:
         # init taskdeps
         stmt = (
             'INSERT INTO taskdeps ('
-            '"task_id", "dep_task_id", "last_updated"'
-            ') VALUES (%s, %s, %s);'
+            '"dagrun_id", "task_id", "dep_task_id", "last_updated"'
+            ') VALUES (%s, %s, %s, %s);'
         )
         for taskname, deplist in taskdeps.items():
             for dep in deplist:
-                state.db.executefetch(stmt, [taskids[taskname], taskids[dep], now_ts])
+                state.db.executefetch(stmt, [dagrun_id, taskids[taskname], taskids[dep], now_ts])
