@@ -1,6 +1,7 @@
 dags:
   example1:
     sch: 0 0 * * *
+    backrun: false
     tasks:
       task0:
         plugin: null
