@@ -10,3 +10,4 @@ class State:
     config: Config
     hotconf: HotConf
     lastrun: int = 0
+    cache: dict = {}
