@@ -1,6 +1,7 @@
 from ..plugins import load_plugin
+from ..config import Config
 
-def validate_task(prefix, task, config) -> list[bool, str|None]:
+def validate_task(prefix, task, config: Config) -> list[bool, str|None]:
     if not isinstance(task, dict):
         return False, f"{prefix} was not a dict"
     
@@ -11,7 +12,7 @@ def validate_task(prefix, task, config) -> list[bool, str|None]:
     if "plugin" not in task:
         return False, f"{prefix}.plugin was missing"
     
-    if not config.validation.check_plugins:
+    if not config.validation.check_plugins_tasks:
         return True, None
     
     # A nothing-burger is possible but pointless.

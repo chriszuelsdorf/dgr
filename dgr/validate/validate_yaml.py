@@ -14,11 +14,11 @@ class Validator:
     @staticmethod
     def validate_file(path, raise_on_err=False, config:Config|None=None) -> list[bool, str|None]:
         contents = load_yaml(path)
-        return Validator.validate(contents, raise_on_err)
+        return Validator.validate(contents, raise_on_err, config)
     
     @staticmethod
     def validate(y: dict, raise_on_err=False, config:Config|None=None) -> list[bool, str|None]:
-        result, msg = Validator._validate(y)
+        result, msg = Validator._validate(y, config)
         if result is False and raise_on_err:
             raise InvalidConfigError(msg)
         return result, msg
@@ -30,7 +30,7 @@ class Validator:
         _config = config or Config()
         for k, v in y.items():
             if k == "dags":
-                res, msg = validate_dags(v, config)
+                res, msg = validate_dags(v, _config)
             else:
                 return False, f"Unknown entry {k}"
             if res is False:

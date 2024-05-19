@@ -1,9 +1,17 @@
 import psycopg2
 
+from ..config import Config
+
 
 class DB:
-    def __init__(self, config) -> None:
-        self.conn = psycopg2.connect(**config.db.params)
+    def __init__(self, config:Config) -> None:
+        self.conn = psycopg2.connect(
+            host = config.db.host,
+            port = config.db.port,
+            user = config.db.user,
+            passowrd = config.db.passowrd,
+            dbname = config.db.dbname,
+        )
     def querymany(self, q, params):
         # use %s without quotes for parameters
         with self.conn.cursor() as cur:

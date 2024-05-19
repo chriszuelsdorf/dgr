@@ -1,7 +1,9 @@
 import sys
 import importlib.util
 
-def load_plugin(name, config):
+from ..config import Config
+
+def load_plugin(name, config: Config):
     fn = config.dirs.base + f"/plugins/{name}.py"
     spec = importlib.util.spec_from_file_location(name, fn)
     module = importlib.util.module_from_spec(spec)
