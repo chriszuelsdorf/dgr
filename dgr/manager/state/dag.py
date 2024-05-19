@@ -34,11 +34,12 @@ class Dag:
         # init dagrun
         stmt = (
             "INSERT INTO dagruns "
-            '("name", "status", "scheduled", "last_updated") '
+            '("name", "status", "scheduled", "last_managed", "last_updated") '
             "VALUES (%s, %s, %s, %s) "
             'RETURNING "id";'
         )
-        r = state.db.executefetch(stmt, [self.name, "created", self.sch.prev(), now_ts])
+        args = [self.name, "created", self.sch.prev(), now_ts, now_ts]
+        r = state.db.executefetch(stmt, args)
         dagrun_id = r[0][0]
         # init tasks
         taskids = {}
@@ -49,9 +50,9 @@ class Dag:
         # init taskdeps
         stmt = (
             'INSERT INTO taskdeps ('
-            '"dagrun_id", "task_id", "dep_task_id", "last_managed", "last_updated"'
-            ') VALUES (%s, %s, %s, %s, %s);'
+            '"dagrun_id", "task_id", "dep_task_id", "last_updated"'
+            ') VALUES (%s, %s, %s, %s);'
         )
         for taskname, deplist in taskdeps.items():
             for dep in deplist:
-                state.db.execute(stmt, [dagrun_id, taskids[taskname], taskids[dep], now_ts, now_ts])
+                state.db.execute(stmt, [dagrun_id, taskids[taskname], taskids[dep], now_ts])
