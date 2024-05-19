@@ -26,4 +26,12 @@ class DB:
         # use %s without quotes for parameters
         with self.conn.cursor() as cur:
             cur.execute(s, params)
+    def executefetch(self, s, params):
+        # use %s without quotes for parameters
+        with self.conn.cursor() as cur:
+            cur.execute(s, params)
+            r = cur.fetchall()
+            cur.execute("commit;")
+            return r
+
 
